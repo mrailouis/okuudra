@@ -9,6 +9,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.entity.decoration.ArmorStand
 import net.minecraft.world.entity.monster.Giant
 import net.minecraft.world.entity.monster.MagmaCube
+import net.minecraft.world.scores.DisplaySlot
+import net.minecraft.world.scores.PlayerTeam
 import okuudra.api.event.EventBus
 import okuudra.api.event.EventChat
 import okuudra.api.event.EventTick
@@ -44,7 +46,7 @@ object KuudraUtils {
 
     val inKuudra: Boolean get() = Location.inKuudra
 
-    private val tierRegex = Regex("Kuudra's Hollow \\(T(\\d)\\)$")
+    private val tierRegex = Regex("Kuudra's Hollow \\(T(\\d)\\)")
     private val progressRegex = Regex("\\[[|]+]\\s*(\\d+)%")
     private var lastProgress = 0L
 
@@ -61,6 +63,7 @@ object KuudraUtils {
         EventBus.subscribe(this)
         on<EventTick.Start> {
             if (!inKuudra || ++ticks % 10 != 0) return@on
+            if (kuudraTier == 0) readTierFromSidebar()
             scan()
         }
 
@@ -82,8 +85,8 @@ object KuudraUtils {
             }
         }
 
+        // The tier line can arrive before the tab list marks us as in Kuudra, so don't gate this on inKuudra.
         onReceive<ClientboundSetPlayerTeamPacket> {
-            if (!inKuudra) return@onReceive
             val team = parameters.getOrNull() ?: return@onReceive
             val text = (team.playerPrefix.string + team.playerSuffix.string).noControlCodes
             tierRegex.find(text)?.groupValues?.get(1)?.let { kuudraTier = it.toInt() }
@@ -95,6 +98,19 @@ object KuudraUtils {
             kuudraEntity = null
             kuudraTier = 0
             phase = 0
+        }
+    }
+
+    private fun readTierFromSidebar() {
+        val scoreboard = Minecraft.getInstance().level?.scoreboard ?: return
+        val objective = scoreboard.getDisplayObjective(DisplaySlot.SIDEBAR) ?: return
+        for (entry in scoreboard.listPlayerScores(objective)) {
+            if (entry.isHidden) continue
+            val line = PlayerTeam.formatNameForTeam(scoreboard.getPlayersTeam(entry.owner()), entry.ownerName()).string.noControlCodes
+            tierRegex.find(line)?.groupValues?.get(1)?.let {
+                kuudraTier = it.toInt()
+                return
+            }
         }
     }
 

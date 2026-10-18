@@ -100,8 +100,14 @@ object PearlWaypoints : Feature("Pearl Waypoints", Category.PHASE_ONE, "Calculat
     private const val SPEED = 1.5
     private val invPhi = 2.0 / (1.0 + Math.sqrt(5.0))
 
+    // Hypixel sends 17 progress titles per pickup, evenly spaced across the pickup window.
+    private val progressSteps = intArrayOf(5, 11, 17, 23, 29, 35, 41, 47, 53, 59, 65, 71, 77, 83, 89, 95, 100)
+    private val progressRegex = Regex("^\\[[|\\s]*]\\s*(\\d+)%")
+    private var progressStep = -1
+
     private fun maxTime(): Int {
-        val tier = (KuudraUtils.kuudraTier - 1).coerceIn(0, 4)
+        // Unknown tier falls back to T5, the longest window, so the timer is never early.
+        val tier = if (KuudraUtils.kuudraTier in 1..5) KuudraUtils.kuudraTier - 1 else 4
         return pickTimings.getOrNull(tierNames.indexOf(talisman.value))?.getOrNull(tier) ?: 120
     }
 
@@ -125,11 +131,8 @@ object PearlWaypoints : Feature("Pearl Waypoints", Category.PHASE_ONE, "Calculat
         }
 
         val onTitle = { msg: String ->
-            if (KuudraUtils.inKuudra && KuudraUtils.phase == 1 && msg == "[||||||||||||||||||||] 0%" && !picking) {
-                picking = true
-                pickTime = 0
-                afterPick = 100
-            }
+            val percent = progressRegex.find(msg)?.groupValues?.get(1)?.toIntOrNull()
+            if (KuudraUtils.inKuudra && KuudraUtils.phase == 1 && percent != null) onProgress(percent)
         }
         onReceive<ClientboundSetActionBarTextPacket> { onTitle(text().string.noControlCodes) }
         onReceive<ClientboundSetTitleTextPacket> { onTitle(text().string.noControlCodes) }
@@ -138,6 +141,27 @@ object PearlWaypoints : Feature("Pearl Waypoints", Category.PHASE_ONE, "Calculat
         on<EventTick.Server> { tick() }
         on<EventRenderWorld> { draw(render) }
         super.init()
+    }
+
+    private fun onProgress(percent: Int) {
+        if (percent <= 0) {
+            if (picking) return
+            picking = true
+            pickTime = 0
+            progressStep = -1
+            afterPick = 100
+            return
+        }
+        val step = progressSteps.indexOfFirst { it >= percent }.let { if (it < 0) progressSteps.lastIndex else it }
+        if (!picking) {
+            // Missed the 0% title, start from wherever the server says we are.
+            picking = true
+            afterPick = 100
+        } else if (step == progressStep) {
+            return
+        }
+        progressStep = step
+        pickTime = (maxTime() * (step + 1) / progressSteps.size.toDouble()).roundToInt()
     }
 
     private fun tick() {
@@ -258,6 +282,7 @@ object PearlWaypoints : Feature("Pearl Waypoints", Category.PHASE_ONE, "Calculat
     private fun reset() {
         picking = false
         pickTime = 0
+        progressStep = -1
         afterPick = 0
         waypoints.clear()
         dp = null
