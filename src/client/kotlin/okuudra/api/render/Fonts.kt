@@ -3,9 +3,7 @@ package okuudra.api.render
 import okuudra.OKuudra
 
 enum class UiFont(val file: String, val extension: String = "otf") {
-    DISPLAY("DisplayRegular"),
     DISPLAY_SEMIBOLD("DisplaySemibold"),
-    DISPLAY_BOLD("DisplayBold"),
     TEXT("TextRegular"),
     TEXT_SEMIBOLD("TextSemibold"),
     TEXT_BOLD("TextBold"),
