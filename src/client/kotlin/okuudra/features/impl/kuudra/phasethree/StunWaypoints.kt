@@ -14,7 +14,7 @@ import okuudra.config.Feature
 
 object StunWaypoints : Feature("Stun Waypoints", Category.PHASE_THREE, "Shows the three pod blocks inside Kuudra, offset to where they will be before you are eaten.") {
     private val color = color("Waypoint colour", Argb.argb(0, 245, 255, 200))
-    private val style = choice("Style", listOf("Outline", "Filled", "Both"), "Outline")
+    private val style = boxStyle(default = "Outline")
     private val depth = toggle("Depth", false, "Hide the waypoints behind walls.")
 
     private val entrance = Vec3(-161.0, 49.0, -186.0)
@@ -49,7 +49,7 @@ object StunWaypoints : Feature("Stun Waypoints", Category.PHASE_THREE, "Shows th
             val offset = if (cannonball) pos.subtract(entrance) else Vec3.ZERO
             for (pod in pods) {
                 val p = pod.add(offset)
-                render.styledBox(AABB(p.x - 0.5, p.y, p.z - 0.5, p.x + 0.5, p.y + 1.0, p.z + 0.5), color.value, style.value, depth.value)
+                render.box(AABB(p.x - 0.5, p.y, p.z - 0.5, p.x + 0.5, p.y + 1.0, p.z + 0.5), color.value, style, depth.value)
             }
         }
         super.init()

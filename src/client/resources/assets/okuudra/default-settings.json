@@ -139,7 +139,7 @@
       "enabled": true,
       "keybind": -1,
       "settings": {
-        "Box opacity": 0.35000002,
+        "Fill opacity": 0.35000002,
         "Progress text": true
       }
     },

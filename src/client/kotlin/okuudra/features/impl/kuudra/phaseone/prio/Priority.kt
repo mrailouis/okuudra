@@ -33,6 +33,7 @@ object Priority : Feature("Crate Priority", Category.PHASE_ONE, "Shows where to 
     private val alerts = toggle("Chat messages", true, "Logs your pre spot and each instruction in chat.")
     private val renderTarget = toggle("Render target", true, "Draws the pile targets after you pearl.")
     private val targetBlocks = toggle("Target blocks", true, "Boxes on the landing spot and pile targets.").visibleWhen { renderTarget.value }
+    private val boxStyle = boxStyle("Box") { renderTarget.value }
     private val labels = toggle("Text labels", true, "Names above the floating targets.").visibleWhen { renderTarget.value }
     private val aimSize = slider("Aim box size", 0.1f, 0.02f, 2f, 0.01f, "Size of the floating boxes you aim at.").visibleWhen { renderTarget.value }
     private val aimDistance = slider("Aim box distance", 30f, 5f, 100f, 1f, "How far in front of you the floating boxes are drawn.").visibleWhen { renderTarget.value }
@@ -128,10 +129,10 @@ object Priority : Feature("Crate Priority", Category.PHASE_ONE, "Shows where to 
             val player = mc.player ?: return@on
             val land = landing ?: return@on
             val spots = pileSpots[inst.destinationPile] ?: return@on
-            if (targetBlocks.value) render.styledBox(AABB(land.x - 0.5, land.y - 1.0, land.z - 0.5, land.x + 0.5, land.y, land.z + 0.5), Argb.withAlpha(Argb.GREEN, 0.3f), "Both", false)
+            if (targetBlocks.value) render.box(AABB(land.x - 0.5, land.y - 1.0, land.z - 0.5, land.x + 0.5, land.y, land.z + 0.5), Argb.withAlpha(Argb.GREEN, 0.3f), boxStyle)
             val origin = Vec3(land.x, land.y + 1.54, land.z)
             for (spot in spots) {
-                if (targetBlocks.value) render.styledBox(AABB(spot.x - 0.5, spot.y, spot.z - 0.5, spot.x + 0.5, spot.y + 1.0, spot.z + 0.5), Hud.LABEL, "Both", false)
+                if (targetBlocks.value) render.box(AABB(spot.x - 0.5, spot.y, spot.z - 0.5, spot.x + 0.5, spot.y + 1.0, spot.z + 0.5), Hud.LABEL, boxStyle)
                 val dx = spot.x - origin.x
                 val dy = spot.y + 1.0 - origin.y
                 val dz = spot.z - origin.z
@@ -140,7 +141,7 @@ object Priority : Feature("Crate Priority", Category.PHASE_ONE, "Shows where to 
                 val dist = aimDistance.value.toDouble()
                 val half = aimSize.value / 2.0
                 val floating = player.eyePosition.add(-sin(yaw) * cos(pitch) * dist, -sin(pitch) * dist, cos(yaw) * cos(pitch) * dist)
-                render.styledBox(AABB(floating.x - half, floating.y - half, floating.z - half, floating.x + half, floating.y + half, floating.z + half), Hud.LABEL, "Both", false)
+                render.box(AABB(floating.x - half, floating.y - half, floating.z - half, floating.x + half, floating.y + half, floating.z + half), Hud.LABEL, boxStyle)
                 if (labels.value) render.text(spot.name, Vec3(floating.x, floating.y - half - 0.25 * labelScale.value, floating.z), labelScale.value, false, shadow = true)
             }
         }

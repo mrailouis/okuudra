@@ -68,6 +68,25 @@ abstract class Feature(val name: String, val category: Category, val description
 
     protected fun info(name: String, vararg lines: String) = add(InfoSetting(name, lines.toList()))
 
+    // Style + outline/fill opacity for a rendered box. An empty prefix keeps the plain names.
+    protected fun boxStyle(
+        prefix: String = "",
+        default: String = "Both",
+        outline: Float = 1f,
+        fill: Float = 0.5f,
+        section: String = "",
+        visible: () -> Boolean = { true },
+    ): BoxStyle {
+        val label = if (prefix.isEmpty()) "Style" else "$prefix style"
+        val lower = if (prefix.isEmpty()) "" else "$prefix "
+        val style = choice(label, BoxStyle.OPTIONS, default, "Draw the box as an outline, filled, or both.").section(section).visibleWhen(visible)
+        val outlineOpacity = slider("${lower}Outline opacity".replaceFirstChar { it.uppercase() }, outline, 0f, 1f, 0.05f)
+            .section(section).visibleWhen { visible() && style.value != "Filled" }
+        val fillOpacity = slider("${lower}Fill opacity".replaceFirstChar { it.uppercase() }, fill, 0f, 1f, 0.05f)
+            .section(section).visibleWhen { visible() && style.value != "Outline" }
+        return BoxStyle(style, outlineOpacity, fillOpacity)
+    }
+
     protected fun <S : Setting<*>> S.section(name: String): S = apply { section = name }
 
     protected fun <S : Setting<*>> S.titled(text: String): S = apply { title = text }

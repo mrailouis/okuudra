@@ -11,19 +11,27 @@ import com.mojang.blaze3d.vertex.ByteBufferBuilder
 import com.mojang.blaze3d.vertex.DefaultVertexFormat
 import com.mojang.blaze3d.vertex.VertexConsumer
 import com.mojang.blaze3d.vertex.VertexFormat
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderContext
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.Font
 import net.minecraft.client.renderer.blockentity.BeaconRenderer
 import net.minecraft.client.renderer.rendertype.RenderSetup
 import net.minecraft.client.renderer.rendertype.RenderType
 import net.minecraft.resources.Identifier
+import net.minecraft.world.level.ClipContext
 import net.minecraft.world.phys.AABB
+import net.minecraft.world.phys.HitResult
 import net.minecraft.world.phys.Vec3
 import okuudra.OKuudra
 import okuudra.api.event.EventRenderWorld
+import okuudra.api.render.Canvas
+import okuudra.api.render.UiFont
+import okuudra.api.render.UiFrame
 import okuudra.api.util.Argb
+import okuudra.api.util.legacyRuns
+import okuudra.config.BoxStyle
+import org.joml.Vector3f
 import java.util.Optional
 import kotlin.math.cos
 import kotlin.math.sin
@@ -50,17 +58,11 @@ class WorldRender private constructor() {
         stack.popPose()
     }
 
-    fun box(box: AABB, color: Int, outline: Boolean = true, fill: Boolean = false, depth: Boolean = false, fillAlpha: Float = 0.25f) {
-        val o = if (outline) color else 0
-        val f = if (fill) Argb.scaleAlpha(color, fillAlpha) else 0
+    fun box(box: AABB, color: Int, style: BoxStyle, depth: Boolean = false) {
+        val o = Argb.scaleAlpha(color, style.outlineAlpha)
+        val f = Argb.scaleAlpha(color, style.fillAlpha)
         if (Argb.alpha(o) == 0 && Argb.alpha(f) == 0) return
         boxes.add(Box(box, o, f, depth))
-    }
-
-    fun styledBox(box: AABB, color: Int, style: String, depth: Boolean) = when (style) {
-        "Filled" -> box(box, color, outline = false, fill = true, depth = depth, fillAlpha = 1f)
-        "Outline" -> box(box, color, outline = true, fill = false, depth = depth)
-        else -> box(box, color, outline = true, fill = true, depth = depth, fillAlpha = 0.5f)
     }
 
     fun line(from: Vec3, to: Vec3, color: Int, depth: Boolean = false) {
@@ -83,18 +85,16 @@ class WorldRender private constructor() {
     }
 
     private fun flush(context: LevelRenderContext) {
-        if (boxes.isEmpty() && lines.isEmpty() && labels.isEmpty()) return
+        if (boxes.isEmpty() && lines.isEmpty()) return
         try {
             val camera = Minecraft.getInstance().gameRenderer.mainCamera.position()
             drawFills(FILL, true, camera)
             drawFills(FILL_THROUGH, false, camera)
             drawLines(LINES, true, camera)
             drawLines(LINES_THROUGH, false, camera)
-            drawLabels(context, camera)
         } finally {
             boxes.clear()
             lines.clear()
-            labels.clear()
         }
     }
 
@@ -128,32 +128,51 @@ class WorldRender private constructor() {
         BUFFER.clear()
     }
 
-    private fun drawLabels(context: LevelRenderContext, cam: Vec3) {
+    // Labels are projected and drawn in the HUD pass with our own font: crisper than the
+    // vanilla font in world space, and shader packs can't touch them.
+    private fun drawLabels(c: Canvas) {
         if (labels.isEmpty()) return
         val mc = Minecraft.getInstance()
-        val font = mc.font
-        val source = context.bufferSource()
-        val rotation = mc.gameRenderer.mainCamera.rotation()
-        val stack = context.poseStack()
+        val camera = mc.gameRenderer.mainCamera
+        val eye = camera.position()
+        val forward = camera.rotation().transform(Vector3f(0f, 0f, -1f))
+        val up = camera.upVector()
         for (label in labels) {
-            stack.pushPose()
-            val scale = label.scale * 0.025f
-            stack.translate(label.pos.x - cam.x, label.pos.y - cam.y, label.pos.z - cam.z)
-            stack.mulPose(rotation)
-            stack.scale(scale, -scale, scale)
-            val mode = if (label.depth) Font.DisplayMode.NORMAL else Font.DisplayMode.SEE_THROUGH
-            val x = -font.width(label.text) / 2f
-            if (label.shadow) {
-                val plain = label.text.replace(Regex("§."), "")
-                stack.pushPose()
-                stack.translate(0.0, 0.0, 0.01)
-                font.drawInBatch(plain, x + 1f, 1f, 0xFF000000.toInt(), false, stack.last().pose(), source, mode, 0, FULL_BRIGHT)
-                stack.popPose()
+            val rel = label.pos.subtract(eye)
+            if (rel.x * forward.x() + rel.y * forward.y() + rel.z * forward.z() <= 0.05) continue
+            if (label.depth && occluded(eye, label.pos)) continue
+            val top = screen(label.pos)
+            val worldSize = (label.scale * LABEL_WORLD_SIZE).toDouble()
+            val bottom = screen(label.pos.subtract(up.x() * worldSize, up.y() * worldSize, up.z() * worldSize))
+            val size = (bottom.y - top.y).toFloat().coerceIn(MIN_LABEL_SIZE, MAX_LABEL_SIZE)
+            val runs = legacyRuns(label.text, Argb.WHITE)
+            val width = runs.sumOf { c.textWidth(LABEL_FONT, it.text, size).toDouble() }.toFloat()
+            if (top.x + width / 2f < 0f || top.x - width / 2f > c.width || top.y > c.height || top.y + size < 0f) continue
+            var x = top.x.toFloat() - width / 2f
+            val y = top.y.toFloat()
+            val off = if (label.shadow) (size / 14f).coerceAtLeast(0.6f) else (size / 18f).coerceAtLeast(0.5f)
+            val shadowAlpha = if (label.shadow) 0xE0 else 0x90
+            for (run in runs) {
+                c.text(LABEL_FONT, run.text, x + off, y + off, size, Argb.withAlpha(0, Argb.alpha(run.color) * shadowAlpha / 255))
+                x += c.text(LABEL_FONT, run.text, x, y, size, run.color)
             }
-            font.drawInBatch(label.text, x, 0f, -1, !label.shadow, stack.last().pose(), source, mode, 0, FULL_BRIGHT)
-            stack.popPose()
         }
-        source.endBatch()
+    }
+
+    private fun screen(pos: Vec3): Vec3 {
+        val mc = Minecraft.getInstance()
+        val ndc = mc.gameRenderer.projectPointToScreen(pos)
+        val w = mc.window.guiScaledWidth.toDouble()
+        val h = mc.window.guiScaledHeight.toDouble()
+        return Vec3((ndc.x * 0.5 + 0.5) * w, (0.5 - ndc.y * 0.5) * h, 0.0)
+    }
+
+    private fun occluded(eye: Vec3, pos: Vec3): Boolean {
+        val mc = Minecraft.getInstance()
+        val level = mc.level ?: return false
+        val player = mc.player ?: return false
+        val hit = level.clip(ClipContext(eye, pos, ClipContext.Block.VISUAL, ClipContext.Fluid.NONE, player))
+        return hit.type != HitResult.Type.MISS && hit.location.distanceToSqr(eye) < eye.distanceToSqr(pos) - 0.25
     }
 
     private fun fill(c: VertexConsumer, b: AABB, argb: Int) {
@@ -232,7 +251,11 @@ class WorldRender private constructor() {
 
     companion object {
         var lineThickness = 0.03f
-        private const val FULL_BRIGHT = 0xF000F0
+        private val LABEL_FONT = UiFont.TEXT_BOLD
+        // Matches the old vanilla-font labels: 8 font pixels at 0.025 blocks each.
+        private const val LABEL_WORLD_SIZE = 0.2f
+        private const val MIN_LABEL_SIZE = 6f
+        private const val MAX_LABEL_SIZE = 96f
         private val INSTANCE = WorldRender()
         private val BUFFER = ByteBufferBuilder(256 * 1024)
         private val POSITION_COLOR = Identifier.withDefaultNamespace("core/position_color")
@@ -245,6 +268,7 @@ class WorldRender private constructor() {
             LevelRenderEvents.COLLECT_SUBMITS.register { context ->
                 if (Minecraft.getInstance().level == null) return@register
                 INSTANCE.submit = context
+                INSTANCE.labels.clear()
                 try {
                     EventRenderWorld(INSTANCE).post()
                 } finally {
@@ -254,6 +278,9 @@ class WorldRender private constructor() {
             LevelRenderEvents.END_MAIN.register { context ->
                 if (Minecraft.getInstance().level == null) return@register
                 INSTANCE.flush(context)
+            }
+            HudElementRegistry.addFirst(Identifier.fromNamespaceAndPath(OKuudra.MOD_ID, "world_labels")) { extractor, _ ->
+                if (Minecraft.getInstance().level != null && INSTANCE.labels.isNotEmpty()) UiFrame.draw(extractor) { INSTANCE.drawLabels(it) }
             }
         }
 
@@ -269,6 +296,7 @@ class WorldRender private constructor() {
                 .withDepthStencilState(if (depth) Optional.of(DepthStencilState(CompareOp.LESS_THAN_OR_EQUAL, false)) else Optional.empty())
                 .withVertexFormat(DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS)
                 .build()
+            IrisCompat.assign(pipeline, "BASIC")
             return RenderType.create("${OKuudra.MOD_ID}_world_$name", RenderSetup.builder(pipeline).createRenderSetup())
         }
     }

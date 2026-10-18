@@ -14,7 +14,7 @@ import okuudra.config.Category
 import okuudra.config.Feature
 
 object BuildWaypoints : Feature("Build Waypoints", Category.PHASE_TWO, "Beacons on the build piles, coloured by how far each one is built.") {
-    private val opacity = slider("Box opacity", 0.35f, 0.05f, 1f, 0.05f)
+    private val style = boxStyle(fill = 0.35f)
     private val showText = toggle("Progress text", true, "Shows the pile progress above it.")
 
     private class Pile(val pos: Vec3, val name: String, val progress: Int)
@@ -62,7 +62,7 @@ object BuildWaypoints : Feature("Build Waypoints", Category.PHASE_TWO, "Beacons 
                 val x = pile.pos.x - 0.5
                 val z = pile.pos.z - 0.5
                 val y = pile.pos.y - 1.0
-                render.box(AABB(x, y, z, x + 1.0, y + 1.0, z + 1.0), color, outline = true, fill = true, fillAlpha = opacity.value)
+                render.box(AABB(x, y, z, x + 1.0, y + 1.0, z + 1.0), color, style)
                 render.beam(x, y, z, color, 25)
                 if (showText.value) render.text(pile.name, pile.pos.add(0.0, 1.0, 0.0), 1f)
             }

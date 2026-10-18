@@ -14,6 +14,7 @@ object ShopHelper : Feature("Shop Helper", Category.GENERAL, "Waypoints on the s
     private val spotColor = color("Spot colour", 0xFF7FD4FF.toInt())
     private val standingColor = color("Standing colour", 0xFFFFE04A.toInt())
     private val pickingColor = color("Picking colour", 0xFF55FF55.toInt())
+    private val style = boxStyle(fill = 0.25f)
 
     private val spots = listOf(
         -85.30 to 78.00 to -128.30,
@@ -36,7 +37,7 @@ object ShopHelper : Feature("Shop Helper", Category.GENERAL, "Waypoints on the s
                     KuudraUtils.pickingSupply -> pickingColor.value
                     else -> standingColor.value
                 }
-                render.box(AABB(spot), color, outline = true, fill = true)
+                render.box(AABB(spot), color, style)
             }
         }
         super.init()

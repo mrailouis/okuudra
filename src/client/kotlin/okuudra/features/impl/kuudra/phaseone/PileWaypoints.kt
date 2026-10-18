@@ -17,6 +17,7 @@ import kotlin.math.abs
 object PileWaypoints : Feature("Pile Waypoints", Category.PHASE_ONE, "Beacons on the supply piles that still need a supply.") {
     private val normalColor = color("Pile colour", Argb.argb(255, 255, 255, 52))
     private val noPreColor = color("No pre pile colour", Argb.argb(0, 255, 144, 50), "Colour of the pile for the missing pre.")
+    private val boxStyle = boxStyle(fill = 0.2f)
     private val names = toggle("Pile names", true, "Name above each pile.")
 
     private class Pile(val name: String, val pos: Vec3)
@@ -73,7 +74,7 @@ object PileWaypoints : Feature("Pile Waypoints", Category.PHASE_ONE, "Beacons on
             for (pile in remaining) {
                 val color = if (pile.name == noPre) noPreColor.value else normalColor.value
                 val box = AABB(pile.pos.x, pile.pos.y, pile.pos.z, pile.pos.x + 1.0, pile.pos.y + 1.0, pile.pos.z + 1.0)
-                render.box(box, Argb.withAlpha(color, 255), outline = true, fill = true, fillAlpha = Argb.alpha(color) / 255f)
+                render.box(box, Argb.withAlpha(color, 255), boxStyle)
                 render.beam(pile.pos.x, pile.pos.y, pile.pos.z, Argb.withAlpha(color, 255), 40)
                 if (names.value) render.text(pile.name, pile.pos.add(0.5, 2.5, 0.5), 1f)
             }

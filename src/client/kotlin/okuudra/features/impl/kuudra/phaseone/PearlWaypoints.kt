@@ -39,6 +39,7 @@ object PearlWaypoints : Feature("Pearl Waypoints", Category.PHASE_ONE, "Calculat
     private val landingDelay = slider("Landing delay", 10f, 0f, 100f, 1f, "Ticks.").section("Double pearl").visibleWhen { doublePearl.value }
     private val dpColor = color("Double pearl colour", Hud.LABEL).section("Double pearl").visibleWhen { doublePearl.value }
     private val dpScale = slider("Double pearl box size", 0.085f, 0.01f, 2f, 0.05f).section("Double pearl").visibleWhen { doublePearl.value }
+    private val dpStyle = boxStyle("Double pearl", section = "Double pearl") { doublePearl.value && render3D.value }
     private val dpText = toggle("Double pearl text", true, "Name and timer above the double pearl.").section("Double pearl").visibleWhen { doublePearl.value }
     private val dpTextScale = slider("Double pearl text size", 1f, 0.05f, 10f, 0.05f).section("Double pearl").visibleWhen { doublePearl.value && dpText.value }
     private val highSquare = toggle("High arc to Square", true, "Higher trajectory from Slash to Square.").section("Double pearl").visibleWhen { doublePearl.value }
@@ -52,6 +53,7 @@ object PearlWaypoints : Feature("Pearl Waypoints", Category.PHASE_ONE, "Calculat
     private val textOffset = slider("Text height offset", 0f, -2f, 2f, 0.05f).section("Waypoints")
     private val distance = slider("Projection distance", 5f, 1f, 100f, 0.5f, "Distance of the waypoint from your camera.").section("Waypoints")
     private val wpColor = color("Waypoint colour", Hud.LABEL).section("Waypoints")
+    private val wpStyle = boxStyle("Box", section = "Waypoints") { render3D.value }
     private val ping = slider("Average ping", 50f, 0f, 500f, 10f, "Ping compensation in ms.").section("Waypoints")
 
     private val pickTimings = arrayOf(
@@ -238,7 +240,7 @@ object PearlWaypoints : Feature("Pearl Waypoints", Category.PHASE_ONE, "Calculat
         val offset = textOffset.value.toDouble()
         for (wp in waypoints) {
             val base = wp.pos.add(0.0, -half, 0.0)
-            if (render3D.value) render.styledBox(if (onPile.value) cube(wp.target, pileScale.value.toDouble()) else cube(base, half), wpColor.value, "Both", d)
+            if (render3D.value) render.box(if (onPile.value) cube(wp.target, pileScale.value.toDouble()) else cube(base, half), wpColor.value, wpStyle, d)
             val left = max(maxTime - ping.value / 50.0 - wp.time - pickTime, 0.0)
             val text = if (!active) "AIM" else if (left > 0) timer(left) else "NOW"
             render.text(wp.name, Vec3(wp.pos.x, base.y + half + pad + offset, wp.pos.z), textScale.value * LABEL_SCALE, d, shadow = true)
@@ -247,7 +249,7 @@ object PearlWaypoints : Feature("Pearl Waypoints", Category.PHASE_ONE, "Calculat
         val dpHalf = dpScale.value / 2.0
         for (w in preAimDp + listOfNotNull(dp)) {
             val base = w.pos.add(0.0, -dpHalf, 0.0)
-            if (render3D.value) render.styledBox(cube(base, dpHalf), dpColor.value, "Both", d)
+            if (render3D.value) render.box(cube(base, dpHalf), dpColor.value, dpStyle, d)
         }
         val dpWp = dp ?: return
         if (!dpText.value) return

@@ -34,7 +34,7 @@ object SupplyHighlighter : Feature("Supply Highlighter", Category.PHASE_ONE, "Hi
     private val compactGiants = toggle("Compact giant box", true, "Only highlights the top of the giant.").section("Supplies").visibleWhen { giantsOn.value }
     private val zombiesOn = toggle("Highlight zombies", true, "Highlights hittable zombies.").section("Supplies")
     private val zombieColor = color("Zombie colour", Argb.withAlpha(Argb.GREEN, 150)).section("Supplies").visibleWhen { zombiesOn.value }
-    private val style = choice("Style", listOf("Filled", "Outline", "Both"), "Outline").section("Supplies")
+    private val style = boxStyle(default = "Outline", section = "Supplies")
     private val depth = toggle("Depth", true, "Hide boxes behind walls.").section("Supplies")
     private val reachable = toggle("Reachable box", true, "Highlights the part of the crate you can reach.").section("Reach")
     private val reachableColor = color("Reachable colour", Argb.withAlpha(Argb.CYAN, 150)).section("Reach").visibleWhen { reachable.value }
@@ -107,7 +107,7 @@ object SupplyHighlighter : Feature("Supply Highlighter", Category.PHASE_ONE, "Hi
     }
 
     private fun zombieBox(render: WorldRender, entity: Entity) {
-        render.styledBox(entity.boundingBox, zombieColor.value, style.value, depth.value)
+        render.box(entity.boundingBox, zombieColor.value, style, depth.value)
         if (!reachable.value) return
         val player = mc.player ?: return
         val eye = Vec3(player.x, player.y + if (player.isCrouching) 1.5399999618530273 else 1.6200000047683716, player.z)
@@ -121,13 +121,13 @@ object SupplyHighlighter : Feature("Supply Highlighter", Category.PHASE_ONE, "Hi
         val maxX = min(b.maxX, eye.x + r)
         val maxY = min(b.maxY, eye.y + r)
         val maxZ = min(b.maxZ, eye.z + r)
-        if (minX < maxX && minY < maxY && minZ < maxZ) render.styledBox(AABB(minX, minY, minZ, maxX, maxY, maxZ), reachableColor.value, style.value, depth.value)
+        if (minX < maxX && minY < maxY && minZ < maxZ) render.box(AABB(minX, minY, minZ, maxX, maxY, maxZ), reachableColor.value, style, depth.value)
     }
 
     private fun giantBox(render: WorldRender, entity: Entity) {
         var box = entity.boundingBox
         if (compactGiants.value) box = AABB(box.minX, box.maxY - (box.maxY - box.minY) * 0.2, box.minZ, box.maxX, box.maxY, box.maxZ)
-        render.styledBox(box, giantColor.value, style.value, depth.value)
+        render.box(box, giantColor.value, style, depth.value)
     }
 
     private fun blocksPearl(px: Double, py: Double, pz: Double, entity: Entity): Boolean {
