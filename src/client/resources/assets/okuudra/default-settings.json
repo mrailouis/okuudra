@@ -1,0 +1,251 @@
+{
+  "features": {
+    "Kuudra QOL": {
+      "enabled": true,
+      "keybind": -1,
+      "settings": {
+        "Highlight Kuudra": true,
+        "Kuudra colour": -1,
+        "Cannon hitbox": true
+      }
+    },
+    "Kuudra Splits": {
+      "enabled": true,
+      "keybind": -1,
+      "settings": {
+        "Show supplies": true,
+        "Show freshes": true,
+        "Title colour": -16724481,
+        "Label colour": -16748117,
+        "List number colour": -858408,
+        "Time colour 1 (fastest)": -1,
+        "Time colour 2": -5635926,
+        "Time colour 3": -11184641,
+        "Time colour 4": -11141291,
+        "Time colour 5": -22016,
+        "Time colour 6": -43691,
+        "Time colour 7 (slowest)": -5636096
+      }
+    },
+    "Kuudra Timers": {
+      "enabled": true,
+      "keybind": -1,
+      "settings": {
+        "Show ticks": true,
+        "Show unit": true,
+        "Supplies timer": true,
+        "Build timer": true
+      }
+    },
+    "Shop Helper": {
+      "enabled": true,
+      "keybind": -1,
+      "settings": {
+        "Spot colour": -1,
+        "Standing colour": -8118,
+        "Picking colour": -11141291
+      }
+    },
+    "Crate Overlay": {
+      "enabled": true,
+      "keybind": -1,
+      "settings": {
+        "Smooth overlay": true
+      }
+    },
+    "No Pre Alert": {
+      "enabled": true,
+      "keybind": -1,
+      "settings": {}
+    },
+    "Pearl Waypoints": {
+      "enabled": true,
+      "keybind": -1,
+      "settings": {
+        "Talisman tier": "T3 Tali",
+        "Show ticks": true,
+        "Show unit": true,
+        "Waypoint depth": true,
+        "Double pearl": true,
+        "Landing delay": 10.0,
+        "Double pearl colour": -65536,
+        "Double pearl box size": 0.71,
+        "Double pearl text": true,
+        "Double pearl text size": 3.0,
+        "High arc to Square": true,
+        "High arc to X Cannon": false,
+        "3D box": true,
+        "Box on pile": true,
+        "Pile box size": 0.5,
+        "Floating box size": 0.11,
+        "Text size": 4.3,
+        "Text height offset": 0.0,
+        "Projection distance": 31.0,
+        "Waypoint colour": -16741377,
+        "Average ping": 70.0
+      }
+    },
+    "Pile Waypoints": {
+      "enabled": true,
+      "keybind": -1,
+      "settings": {
+        "Pile colour": -11513776,
+        "No pre pile colour": -1678573824,
+        "Pile names": true
+      }
+    },
+    "Supply Highlighter": {
+      "enabled": true,
+      "keybind": -1,
+      "settings": {
+        "Pre spawn circles": true,
+        "Pre spawn colour": -1761651371,
+        "Hooked colour": -1772748971,
+        "Highlight giants": true,
+        "Giant colour": -1761651371,
+        "Compact giant box": true,
+        "Highlight zombies": true,
+        "Zombie colour": -1772748971,
+        "Style": "Outline",
+        "Depth": true,
+        "Reachable box": true,
+        "Reachable colour": -1778319361,
+        "Hit distance": 3.0,
+        "Double pearl warning": true
+      }
+    },
+    "Crate Priority": {
+      "enabled": true,
+      "keybind": -1,
+      "settings": {
+        "Chat messages": true,
+        "Render target": true,
+        "Target blocks": true,
+        "Text labels": true,
+        "Aim box size": 0.21,
+        "Aim box distance": 17.0,
+        "Label scale": 3.3,
+        "Alert duration": 65.0
+      }
+    },
+    "Build Progress": {
+      "enabled": true,
+      "keybind": -1,
+      "settings": {
+        "Save FPS": true
+      }
+    },
+    "Build Waypoints": {
+      "enabled": true,
+      "keybind": -1,
+      "settings": {
+        "Box opacity": 0.35000002,
+        "Progress text": true
+      }
+    },
+    "Fresh Messages": {
+      "enabled": true,
+      "keybind": -1,
+      "settings": {
+        "Party message": true,
+        "Title": true,
+        "Sound": true,
+        "Countdown": true
+      }
+    },
+    "Eaten Timer": {
+      "enabled": true,
+      "keybind": -1,
+      "settings": {}
+    },
+    "Stun Waypoints": {
+      "enabled": true,
+      "keybind": -1,
+      "settings": {
+        "Waypoint colour": -16739841,
+        "Style": "Both",
+        "Depth": false
+      }
+    },
+    "Kuudra Direction": {
+      "enabled": true,
+      "keybind": -1,
+      "settings": {
+        "Sound": true
+      }
+    },
+    "Interface": {
+      "enabled": true,
+      "keybind": -1,
+      "settings": {
+        "Open settings": 344,
+        "UI scale": 2.0,
+        "Animation time": 250.0,
+        "Accent": -13475672,
+        "Pin sidebar": true,
+        "Dev messages": false,
+        "Line thickness": 0.01,
+        "Main panel": -14935008,
+        "Sidebar": -15263974,
+        "Cards": -14474455,
+        "Hover": -13948109,
+        "Active": -13355970,
+        "Inputs": -15461353,
+        "Buttons": -13948110,
+        "Separators": -13750730,
+        "Borders": -12237488,
+        "Text": -1316368,
+        "Muted text": -4935491,
+        "Dim text": -7238498,
+        "Slider fill": -13475672
+      }
+    }
+  },
+  "hud": {
+    "kuudra_splits": {
+      "x": 0.0,
+      "y": 0.0,
+      "scale": 1.0
+    },
+    "supplies_timer": {
+      "x": 409.34998,
+      "y": 199.5,
+      "scale": 1.7000002
+    },
+    "build_timer": {
+      "x": 421.9,
+      "y": 254.0,
+      "scale": 2.1000001
+    },
+    "crate_progress": {
+      "x": 385.5,
+      "y": 365.2,
+      "scale": 3.0
+    },
+    "no_pre": {
+      "x": 369.7,
+      "y": 103.0,
+      "scale": 2.3999999
+    },
+    "double_pearl": {
+      "x": 325.3,
+      "y": 168.0,
+      "scale": 2.3999999
+    },
+    "crate_priority": {
+      "x": 367.0,
+      "y": 48.5,
+      "scale": 3.0
+    },
+    "build_progress": {
+      "x": 344.25,
+      "y": 131.5,
+      "scale": 2.3
+    },
+    "eaten_timer": {
+      "x": 370.0,
+      "y": 283.5,
+      "scale": 3.0
+    }
+  }
+}

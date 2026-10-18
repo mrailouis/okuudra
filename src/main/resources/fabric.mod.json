@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "${id}",
+  "version": "${version}",
+  "name": "${name}",
+  "description": "larping kkuudra",
+  "authors": ["mrrai"],
+  "license": "LGPL-3.0-only",
+  "icon": "assets/okuudra/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "main": [{ "adapter": "kotlin", "value": "okuudra.OKuudra" }],
+    "client": [{ "adapter": "kotlin", "value": "okuudra.OKuudraClient" }],
+    "modmenu": [{ "adapter": "kotlin", "value": "okuudra.features.impl.misc.modmenu.ModMenuEntry" }]
+  },
+  "mixins": [{ "config": "okuudra.client.mixins.json", "environment": "client" }],
+  "accessWidener": "okuudra.accesswidener",
+  "depends": {
+    "fabricloader": ">=${loader}",
+    "fabric-api": "*",
+    "fabric-language-kotlin": ">=${kotlin}",
+    "minecraft": "${minecraft}",
+    "java": ">=25"
+  },
+  "suggests": { "modmenu": "*" }
+}

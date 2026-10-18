@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "okuudra.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "mixin.MixinClientPacketListener",
+    "mixin.MixinConnection",
+    "mixin.MixinFirmament",
+    "mixin.MixinKeyboardHandler"
+  ],
+  "injectors": { "defaultRequire": 1 }
+}

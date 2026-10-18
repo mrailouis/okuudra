@@ -1,0 +1,272 @@
+kotlin version: 2.3.0
+error message: java.lang.RuntimeException: Exception while generating code for:
+FUN CLASS_STATIC_INITIALIZER name:<clinit> visibility:public/*package*/ modality:FINAL returnType:kotlin.Unit
+  BLOCK_BODY
+    SET_FIELD 'FIELD FIELD_FOR_OBJECT_INSTANCE name:INSTANCE type:shizo.utils.ItemSwapTacker visibility:public [final,static] declared in shizo.utils.ItemSwapTacker' type=kotlin.Unit origin=INITIALIZE_FIELD
+      value: CONSTRUCTOR_CALL 'private constructor <init> () [primary] declared in shizo.utils.ItemSwapTacker' type=shizo.utils.ItemSwapTacker origin=null
+    BLOCK type=kotlin.Unit origin=SYNTHESIZED_INIT_BLOCK
+      CALL 'public final fun on$default <T> (<this>: kotlin.Any, priority: kotlin.Int, ignoreCancelled: kotlin.Boolean, handler: @[ExtensionFunctionType] kotlin.Function1<T of shizo.events.core.EventBusKt.on$default, kotlin.Unit>, $mask0: kotlin.Int, $handler: kotlin.Any?): kotlin.Unit [inline] declared in shizo.events.core.EventBusKt' type=kotlin.Unit origin=DEFAULT_DISPATCH_CALL
+        TYPE_ARG T: shizo.events.TickEvent.End
+        ARG <this>: GET_FIELD 'FIELD FIELD_FOR_OBJECT_INSTANCE name:INSTANCE type:shizo.utils.ItemSwapTacker visibility:public [final,static] declared in shizo.utils.ItemSwapTacker' type=shizo.utils.ItemSwapTacker origin=null
+        ARG priority: COMPOSITE type=kotlin.Int origin=DEFAULT_VALUE
+          CONST Int type=kotlin.Int value=0
+        ARG ignoreCancelled: COMPOSITE type=kotlin.Boolean origin=DEFAULT_VALUE
+          CONST Boolean type=kotlin.Boolean value=false
+        ARG handler: BLOCK type=shizo.utils.ItemSwapTacker.<clinit>.<no name provided> origin=null
+          CLASS LAMBDA_IMPL CLASS name:<no name provided> modality:FINAL visibility:public/*package*/ superTypes:[kotlin.jvm.internal.Lambda; kotlin.Function1<shizo.events.TickEvent.End, kotlin.Unit>]
+            thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:shizo.utils.ItemSwapTacker.<clinit>.<no name provided>
+            CONSTRUCTOR GENERATED_MEMBER_IN_CALLABLE_REFERENCE visibility:public/*package*/ returnType:shizo.utils.ItemSwapTacker.<clinit>.<no name provided> [primary]
+              BLOCK_BODY
+                DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> (arity: kotlin.Int) declared in kotlin.jvm.internal.Lambda'
+                  ARG arity: CONST Int type=kotlin.Int value=1
+                BLOCK type=kotlin.Unit origin=null
+            FUN name:invoke visibility:public modality:FINAL returnType:kotlin.Unit
+              VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> index:0 type:shizo.utils.ItemSwapTacker.<clinit>.<no name provided>
+              VALUE_PARAMETER kind:Regular name:$this$on index:1 type:shizo.events.TickEvent.End
+              overridden:
+                public abstract fun invoke (p1: P1 of kotlin.Function1): R of kotlin.Function1 [operator] declared in kotlin.Function1
+              BLOCK_BODY
+                CALL 'public final fun <set-recentlySwapped> (<set-?>: kotlin.Boolean): kotlin.Unit declared in shizo.utils.PlayerUtilsKt' type=kotlin.Unit origin=EQ
+                  ARG <set-?>: CONST Boolean type=kotlin.Boolean value=false
+            FIELD FIELD_FOR_OBJECT_INSTANCE name:INSTANCE type:shizo.utils.ItemSwapTacker.<clinit>.<no name provided> visibility:public [final,static]
+            FUN CLASS_STATIC_INITIALIZER name:<clinit> visibility:public/*package*/ modality:FINAL returnType:kotlin.Unit
+              BLOCK_BODY
+                SET_FIELD 'FIELD FIELD_FOR_OBJECT_INSTANCE name:INSTANCE type:shizo.utils.ItemSwapTacker.<clinit>.<no name provided> visibility:public [final,static] declared in shizo.utils.ItemSwapTacker.<clinit>.<no name provided>' type=kotlin.Unit origin=INITIALIZE_FIELD
+                  value: CONSTRUCTOR_CALL 'public/*package*/ constructor <init> () [primary] declared in shizo.utils.ItemSwapTacker.<clinit>.<no name provided>' type=shizo.utils.ItemSwapTacker.<clinit>.<no name provided> origin=null
+            FUN BRIDGE name:invoke visibility:public modality:OPEN returnType:kotlin.Any?
+              VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> index:0 type:shizo.utils.ItemSwapTacker.<clinit>.<no name provided>
+              VALUE_PARAMETER BRIDGE kind:Regular name:p1 index:1 type:kotlin.Any?
+              EXPRESSION_BODY
+                RETURN type=kotlin.Nothing from='public open fun invoke (p1: kotlin.Any?): kotlin.Any? declared in shizo.utils.ItemSwapTacker.<clinit>.<no name provided>'
+                  CALL 'public final fun invoke ($this$on: shizo.events.TickEvent.End): kotlin.Unit declared in shizo.utils.ItemSwapTacker.<clinit>.<no name provided>' type=kotlin.Unit origin=BRIDGE_DELEGATION
+                    ARG <this>: GET_VAR '<this>: shizo.utils.ItemSwapTacker.<clinit>.<no name provided> declared in shizo.utils.ItemSwapTacker.<clinit>.<no name provided>.invoke' type=shizo.utils.ItemSwapTacker.<clinit>.<no name provided> origin=null
+                    ARG $this$on: TYPE_OP type=shizo.events.TickEvent.End origin=IMPLICIT_CAST typeOperand=shizo.events.TickEvent.End
+                      GET_VAR 'p1: kotlin.Any? declared in shizo.utils.ItemSwapTacker.<clinit>.<no name provided>.invoke' type=kotlin.Any? origin=null
+          GET_FIELD 'FIELD FIELD_FOR_OBJECT_INSTANCE name:INSTANCE type:shizo.utils.ItemSwapTacker.<clinit>.<no name provided> visibility:public [final,static] declared in shizo.utils.ItemSwapTacker.<clinit>.<no name provided>' type=shizo.utils.ItemSwapTacker.<clinit>.<no name provided> origin=null
+        ARG $mask0: CONST Int type=kotlin.Int value=3
+        ARG $handler: CONST Null type=kotlin.Any? value=null
+
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:56)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate$default(FunctionCodegen.kt:49)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generateMethodNode(ClassCodegen.kt:428)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generateMethod(ClassCodegen.kt:445)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generate(ClassCodegen.kt:172)
+	at org.jetbrains.kotlin.backend.jvm.JvmIrCodegenFactory.generateFile(JvmIrCodegenFactory.kt:467)
+	at org.jetbrains.kotlin.backend.jvm.JvmIrCodegenFactory.invokeCodegen(JvmIrCodegenFactory.kt:433)
+	at org.jetbrains.kotlin.cli.jvm.compiler.KotlinToJVMBytecodeCompiler.runCodegen$cli(KotlinToJVMBytecodeCompiler.kt:409)
+	at org.jetbrains.kotlin.cli.pipeline.jvm.JvmBackendPipelinePhase.executePhase(JvmBackendPipelinePhase.kt:89)
+	at org.jetbrains.kotlin.cli.pipeline.jvm.JvmBackendPipelinePhase.executePhase(JvmBackendPipelinePhase.kt:27)
+	at org.jetbrains.kotlin.cli.pipeline.PipelinePhase.phaseBody(PipelinePhase.kt:68)
+	at org.jetbrains.kotlin.cli.pipeline.PipelinePhase.phaseBody(PipelinePhase.kt:58)
+	at org.jetbrains.kotlin.config.phaser.NamedCompilerPhase.invoke(CompilerPhase.kt:102)
+	at org.jetbrains.kotlin.backend.common.phaser.CompositePhase.invoke(PhaseBuilders.kt:22)
+	at org.jetbrains.kotlin.config.phaser.CompilerPhaseKt.invokeToplevel(CompilerPhase.kt:53)
+	at org.jetbrains.kotlin.cli.pipeline.AbstractCliPipeline.runPhasedPipeline(AbstractCliPipeline.kt:109)
+	at org.jetbrains.kotlin.cli.pipeline.AbstractCliPipeline.execute(AbstractCliPipeline.kt:68)
+	at org.jetbrains.kotlin.cli.jvm.K2JVMCompiler.doExecutePhased(K2JVMCompiler.kt:51)
+	at org.jetbrains.kotlin.cli.jvm.K2JVMCompiler.doExecutePhased(K2JVMCompiler.kt:42)
+	at org.jetbrains.kotlin.cli.common.CLICompiler.execImpl(CLICompiler.kt:89)
+	at org.jetbrains.kotlin.cli.common.CLICompiler.exec(CLICompiler.kt:359)
+	at org.jetbrains.kotlin.incremental.IncrementalJvmCompilerRunnerBase.runCompiler(IncrementalJvmCompilerRunnerBase.kt:178)
+	at org.jetbrains.kotlin.incremental.IncrementalJvmCompilerRunnerBase.runCompiler(IncrementalJvmCompilerRunnerBase.kt:40)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.doCompile(IncrementalCompilerRunner.kt:504)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compileImpl(IncrementalCompilerRunner.kt:418)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.tryCompileIncrementally$lambda$0$compile(IncrementalCompilerRunner.kt:249)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.tryCompileIncrementally(IncrementalCompilerRunner.kt:267)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compile(IncrementalCompilerRunner.kt:119)
+	at org.jetbrains.kotlin.daemon.CompileServiceImplBase.execIncrementalCompiler(CompileServiceImpl.kt:684)
+	at org.jetbrains.kotlin.daemon.CompileServiceImplBase.access$execIncrementalCompiler(CompileServiceImpl.kt:94)
+	at org.jetbrains.kotlin.daemon.CompileServiceImpl.compile(CompileServiceImpl.kt:1810)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:360)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:200)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:197)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.rmi/sun.rmi.transport.Transport.serviceCall(Transport.java:196)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:598)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:844)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:721)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:720)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.jetbrains.kotlin.codegen.CompilationException: Back-end (JVM) Internal error: Couldn't inline method call: CALL 'public final fun on$default <T> (<this>: kotlin.Any, priority: kotlin.Int, ignoreCancelled: kotlin.Boolean, handler: @[ExtensionFunctionType] kotlin.Function1<T of shizo.events.core.EventBusKt.on$default, kotlin.Unit>, $mask0: kotlin.Int, $handler: kotlin.Any?): kotlin.Unit [inline] declared in shizo.events.core.EventBusKt' type=kotlin.Unit origin=DEFAULT_DISPATCH_CALL
+Method: on$default (Ljava/lang/Object;IZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)V:
+   L0
+    LINENUMBER 142 L0
+   L1
+    LINENUMBER 143 L1
+    ICONST_0
+    ISTORE 1
+   L2
+    LINENUMBER 142 L2
+   L3
+    LINENUMBER 144 L3
+    ICONST_0
+    ISTORE 2
+   L4
+    LINENUMBER 142 L4
+    ALOAD 0
+    LDC "<this>"
+    INVOKESTATIC kotlin/jvm/internal/Intrinsics.checkNotNullParameter (Ljava/lang/Object;Ljava/lang/String;)V
+    ALOAD 3
+    LDC "handler"
+    INVOKESTATIC kotlin/jvm/internal/Intrinsics.checkNotNullParameter (Ljava/lang/Object;Ljava/lang/String;)V
+    ICONST_0
+    ISTORE 4
+   L5
+    LINENUMBER 146 L5
+    GETSTATIC shizo/events/core/EventBus.INSTANCE : Lshizo/events/core/EventBus;
+    ALOAD 0
+    INVOKEVIRTUAL java/lang/Object.getClass ()Ljava/lang/Class;
+    LDC Lshizo/events/TickEvent$End;.class
+    CHECKCAST java/lang/Class
+    ILOAD 1
+    ILOAD 2
+    INVOKESTATIC kotlin/jvm/internal/Intrinsics.needClassReification ()V
+    NEW shizo/events/core/EventBusKt$on$1
+    DUP
+    ALOAD 3
+    INVOKESPECIAL shizo/events/core/EventBusKt$on$1.<init> (Lkotlin/jvm/functions/Function1;)V
+    CHECKCAST kotlin/jvm/functions/Function1
+    INVOKEVIRTUAL shizo/events/core/EventBus.registerListener (Ljava/lang/Class;Ljava/lang/Class;IZLkotlin/jvm/functions/Function1;)V
+   L6
+    LINENUMBER 148 L6
+    RETURN
+   L7
+    LOCALVARIABLE $i$f$on I L5 L7 4
+    LOCALVARIABLE $this$on_u24default Ljava/lang/Object; L0 L7 0
+    LOCALVARIABLE priority I L2 L7 1
+    LOCALVARIABLE ignoreCancelled Z L4 L7 2
+    LOCALVARIABLE handler Lkotlin/jvm/functions/Function1; L0 L7 3
+    MAXSTACK = 8
+    MAXLOCALS = 6
+
+File is unknown
+The root cause java.io.FileNotFoundException was thrown at: java.base/java.io.IoOverNioFileSystem.convertNioToIoExceptionInStreams(IoOverNioFileSystem.java:123)
+	at org.jetbrains.kotlin.backend.jvm.codegen.IrInlineCodegen.genInlineCall(IrInlineCodegen.kt:81)
+	at org.jetbrains.kotlin.backend.jvm.codegen.IrInlineCallGenerator.genCall(IrInlineCallGenerator.kt:36)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitCall(ExpressionCodegen.kt:554)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitCall(ExpressionCodegen.kt:138)
+	at org.jetbrains.kotlin.ir.expressions.IrCall.accept(IrCall.kt:24)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitStatementContainer(ExpressionCodegen.kt:489)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitContainerExpression(ExpressionCodegen.kt:503)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitContainerExpression(ExpressionCodegen.kt:138)
+	at org.jetbrains.kotlin.ir.visitors.IrVisitor.visitBlock(IrVisitor.kt:122)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlock(ExpressionCodegen.kt:427)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlock(ExpressionCodegen.kt:138)
+	at org.jetbrains.kotlin.ir.expressions.IrBlock.accept(IrBlock.kt:18)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitStatementContainer(ExpressionCodegen.kt:489)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlockBody(ExpressionCodegen.kt:494)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlockBody(ExpressionCodegen.kt:138)
+	at org.jetbrains.kotlin.ir.expressions.IrBlockBody.accept(IrBlockBody.kt:20)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.generate(ExpressionCodegen.kt:231)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.doGenerate(FunctionCodegen.kt:132)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:53)
+	... 45 more
+Caused by: java.io.FileNotFoundException: C:\Users\filip\Downloads\shizoo\build\classes\kotlin\main\shizo\events\core\EventBusKt$on$1.class (The system cannot find the path specified)
+	at java.base/java.io.IoOverNioFileSystem.convertNioToIoExceptionInStreams(IoOverNioFileSystem.java:123)
+	at java.base/java.io.IoOverNioFileSystem.initializeStreamsUsingNio0(IoOverNioFileSystem.java:377)
+	at java.base/java.io.IoOverNioFileSystem.initializeStreamUsingNio(IoOverNioFileSystem.java:344)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:181)
+	at org.jetbrains.kotlin.com.intellij.openapi.util.io.FileUtil.loadFileBytes(FileUtil.java:187)
+	at org.jetbrains.kotlin.cli.common.localfs.KotlinLocalVirtualFile.contentsToByteArray(KotlinLocalVirtualFile.kt:108)
+	at org.jetbrains.kotlin.codegen.inline.InlineCodegenUtilsKt.loadClassBytesByInternalName(inlineCodegenUtils.kt:466)
+	at org.jetbrains.kotlin.codegen.inline.ObjectTransformer.createClassReader(ObjectTransformer.kt:50)
+	at org.jetbrains.kotlin.codegen.inline.AnonymousObjectTransformer.doTransform(AnonymousObjectTransformer.kt:57)
+	at org.jetbrains.kotlin.codegen.inline.MethodInliner$doInline$lambdaInliner$1.handleAnonymousObjectRegeneration(MethodInliner.kt:196)
+	at org.jetbrains.kotlin.codegen.inline.MethodInliner$doInline$lambdaInliner$1.anew(MethodInliner.kt:236)
+	at org.jetbrains.org.objectweb.asm.commons.InstructionAdapter.visitTypeInsn(InstructionAdapter.java:472)
+	at org.jetbrains.org.objectweb.asm.tree.TypeInsnNode.accept(TypeInsnNode.java:77)
+	at org.jetbrains.org.objectweb.asm.tree.InsnList.accept(InsnList.java:144)
+	at org.jetbrains.org.objectweb.asm.tree.MethodNode.accept(MethodNode.java:749)
+	at org.jetbrains.kotlin.codegen.inline.MethodInliner.doInline(MethodInliner.kt:431)
+	at org.jetbrains.kotlin.codegen.inline.MethodInliner.doInline(MethodInliner.kt:98)
+	at org.jetbrains.kotlin.codegen.inline.MethodInliner.doInline(MethodInliner.kt:72)
+	at org.jetbrains.kotlin.backend.jvm.codegen.IrInlineCodegen.inlineCall(IrInlineCodegen.kt:315)
+	at org.jetbrains.kotlin.backend.jvm.codegen.IrInlineCodegen.genInlineCall(IrInlineCodegen.kt:67)
+	... 63 more
+Caused by: java.nio.file.NoSuchFileException: C:\Users\filip\Downloads\shizoo\build\classes\kotlin\main\shizo\events\core\EventBusKt$on$1.class
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:87)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:106)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:112)
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.newFileChannel(WindowsFileSystemProvider.java:119)
+	at java.base/java.io.IoOverNioFileSystem.initializeStreamsUsingNio0(IoOverNioFileSystem.java:359)
+	... 81 more
+
+
+error message: Daemon compilation failed: null
+java.lang.Exception
+	at org.jetbrains.kotlin.daemon.common.CompileService$CallResult$Error.get(CompileService.kt:69)
+	at org.jetbrains.kotlin.daemon.common.CompileService$CallResult$Error.get(CompileService.kt:65)
+	at org.jetbrains.kotlin.compilerRunner.GradleKotlinCompilerWork.compileWithDaemon(GradleKotlinCompilerWork.kt:224)
+	at org.jetbrains.kotlin.compilerRunner.GradleKotlinCompilerWork.compileWithDaemonOrFallbackImpl(GradleKotlinCompilerWork.kt:143)
+	at org.jetbrains.kotlin.compilerRunner.GradleKotlinCompilerWork.run(GradleKotlinCompilerWork.kt:107)
+	at org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction.execute(GradleCompilerRunnerWithWorkers.kt:75)
+	at org.gradle.workers.internal.DefaultWorkerServer.execute(DefaultWorkerServer.java:68)
+	at org.gradle.workers.internal.NoIsolationWorkerFactory$1$1.create(NoIsolationWorkerFactory.java:64)
+	at org.gradle.workers.internal.NoIsolationWorkerFactory$1$1.create(NoIsolationWorkerFactory.java:61)
+	at org.gradle.internal.classloader.ClassLoaderUtils.executeInClassloader(ClassLoaderUtils.java:102)
+	at org.gradle.workers.internal.NoIsolationWorkerFactory$1.lambda$execute$0(NoIsolationWorkerFactory.java:61)
+	at org.gradle.workers.internal.AbstractWorker$1.call(AbstractWorker.java:44)
+	at org.gradle.workers.internal.AbstractWorker$1.call(AbstractWorker.java:41)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:209)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)
+	at org.gradle.workers.internal.AbstractWorker.executeWrappedInBuildOperation(AbstractWorker.java:41)
+	at org.gradle.workers.internal.NoIsolationWorkerFactory$1.execute(NoIsolationWorkerFactory.java:58)
+	at org.gradle.workers.internal.DefaultWorkerExecutor.lambda$submitWork$0(DefaultWorkerExecutor.java:176)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.runExecution(DefaultConditionalExecutionQueue.java:194)
+	at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.access$700(DefaultConditionalExecutionQueue.java:127)
+	at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner$1.run(DefaultConditionalExecutionQueue.java:169)
+	at org.gradle.internal.Factories$1.create(Factories.java:30)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.lambda$withLocksAcquired$0(DefaultWorkerLeaseService.java:269)
+	at org.gradle.internal.work.ResourceLockStatistics$1.measure(ResourceLockStatistics.java:42)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.withLocksAcquired(DefaultWorkerLeaseService.java:267)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:259)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:127)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:132)
+	at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.runBatch(DefaultConditionalExecutionQueue.java:164)
+	at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.run(DefaultConditionalExecutionQueue.java:133)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:47)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.nio.file.NoSuchFileException: C:\Users\filip\AppData\Local\Temp\kotlin-backups4689316653128147793\140.backup -> C:\Users\filip\Downloads\shizoo\build\classes\kotlin\main\shizo\commands\CommandsKt$mainCommand$1$invoke$$inlined$runs$7.class
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:87)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:106)
+	at java.base/sun.nio.fs.WindowsFileCopy.move(WindowsFileCopy.java:414)
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.move(WindowsFileSystemProvider.java:291)
+	at java.base/java.nio.file.Files.move(Files.java:1431)
+	at org.jetbrains.kotlin.incremental.RecoverableCompilationTransaction.revertChanges(CompilationTransaction.kt:231)
+	at org.jetbrains.kotlin.incremental.RecoverableCompilationTransaction.close(CompilationTransaction.kt:256)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.tryCompileIncrementally(IncrementalCompilerRunner.kt:712)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compile(IncrementalCompilerRunner.kt:119)
+	at org.jetbrains.kotlin.daemon.CompileServiceImplBase.execIncrementalCompiler(CompileServiceImpl.kt:684)
+	at org.jetbrains.kotlin.daemon.CompileServiceImplBase.access$execIncrementalCompiler(CompileServiceImpl.kt:94)
+	at org.jetbrains.kotlin.daemon.CompileServiceImpl.compile(CompileServiceImpl.kt:1810)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:360)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:200)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:197)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.rmi/sun.rmi.transport.Transport.serviceCall(Transport.java:196)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:598)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:844)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:721)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:720)
+	... 3 more
+
+
